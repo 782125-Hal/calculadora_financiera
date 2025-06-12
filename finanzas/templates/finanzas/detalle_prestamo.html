@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="prestamo-detalle">
+    <h1>Detalles del Préstamo</h1>
+    
+    <div class="info-prestamo">
+        <h2>{{ prestamo.nombre_cliente }}</h2>
+        <p>Monto: ${{ prestamo.monto }}</p>
+        <p>Tasa de interés: {{ prestamo.tasa_interes }}%</p>
+        <p>Plazo: {{ prestamo.plazo }} meses</p>
+        <p>Fecha de inicio: {{ prestamo.fecha_inicio }}</p>
+    </div>
+
+    <div class="acciones">
+        <a href="{% url 'finanzas:registrar_pago' prestamo.id %}" class="btn btn-primary">Registrar Pago</a>
+    </div>
+
+    <div class="historial-pagos">
+        <h3>Historial de Pagos</h3>
+        {% if pagos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pago in pagos %}
+                    <tr>
+                        <td>{{ pago.fecha_pago }}</td>
+                        <td>${{ pago.monto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay pagos registrados.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .prestamo-detalle {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .info-prestamo {
+        margin-bottom: 2rem;
+    }
+
+    .acciones {
+        margin-bottom: 2rem;
+    }
+
+    .historial-pagos table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .historial-pagos th,
+    .historial-pagos td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+{% endblock %}

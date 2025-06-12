@@ -1,0 +1,49 @@
+<!-- templates/finanzas/incrementar_prestamo.html -->
+{% extends 'base.html' %}
+
+{% block title %}Incrementar Préstamo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Incrementar Préstamo</h1>
+
+    <div class="info-prestamo">
+        <h2>Información del Préstamo Actual</h2>
+        <p>Cliente: {{ prestamo.cliente }}</p>
+        <p>Monto inicial: ${{ prestamo.monto }}</p>
+        <p>Plazo actual: {{ prestamo.plazo_meses }} meses</p>
+        <p>Tasa de interés: {{ prestamo.tasa_interes }}%</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Monto del incremento:</label>
+            {{ form.monto }}
+        </div>
+
+        <div class="form-group">
+            <label>Fecha del incremento:</label>
+            {{ form.fecha }}
+        </div>
+
+        <div class="form-group">
+            <label>¿Cómo desea ajustar el préstamo?</label>
+            {{ form.tipo_ajuste }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Aplicar Incremento</button>
+    </form>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Pagos realizados{% endblock %}
+
+{% block content %}
+<h2>Pagos de {{ prestamo.nombre_cliente }}</h2>
+<table border="1">
+    <tr>
+        <th>Fecha</th>
+        <th>Monto Pagado</th>
+    </tr>
+    {% for pago in pagos %}
+    <tr>
+        <td>{{ pago.fecha_pago }}</td>
+        <td>${{ pago.monto_pagado }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>✅ Confirmar y registrar préstamo</h2>
+
+<p>Revisa los datos calculados antes de confirmar:</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar préstamo</button>
+</form>
+
+<a href="{% url 'calcular_pago' %}">🔙 Volver a editar datos</a>
+{% endblock %}

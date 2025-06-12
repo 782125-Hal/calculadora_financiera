@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🏦 Sistema de Gestión de Préstamos</h1>
+
+<div class="acciones-principales">
+    <a href="{% url 'finanzas:nuevo_prestamo' %}" class="btn btn-primary">
+        ➕ Nuevo Préstamo
+    </a>
+    <a href="{% url 'finanzas:calcular_pago' %}" class="btn btn-info">
+        🧮 Calculadora
+    </a>
+    <a href="{% url 'finanzas:lista_prestamos' %}" class="btn btn-secondary">
+        📋 Ver Préstamos
+    </a>
+</div>
+
+{% if prestamos_recientes %}
+    <h2>Préstamos Recientes</h2>
+    <div class="lista-prestamos">
+        {% for prestamo in prestamos_recientes %}
+            <div class="prestamo-card">
+                <h3>Préstamo #{{ prestamo.id }}</h3>
+                <p>Cliente: {{ prestamo.nombre_cliente }}</p>
+                <p>Monto: ${{ prestamo.monto|floatformat:2 }}</p>
+                <p>Fecha inicio: {{ prestamo.fecha_inicio|date:"d/m/Y" }}</p>
+                <p>Plazo: {{ prestamo.plazo }} meses</p>
+                <a href="{% url 'finanzas:detalle_prestamo' prestamo_id=prestamo.id %}" class="btn btn-link">
+                    Ver detalles →
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No hay préstamos registrados aún.</p>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .acciones-principales {
+        margin: 2rem 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+    }
+
+    .btn-primary { background-color: #007bff; }
+    .btn-info { background-color: #17a2b8; }
+    .btn-secondary { background-color: #6c757d; }
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        padding: 0;
+    }
+    .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .lista-prestamos {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .prestamo-card {
+        border: 1px solid #ddd;
+        padding: 1.5rem;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .prestamo-card h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.5rem;
+    }
+
+    .prestamo-card p {
+        margin: 0.5rem 0;
+        color: #34495e;
+    }
+</style>
+{% endblock %}

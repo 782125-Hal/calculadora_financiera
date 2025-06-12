@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Detalle de Inversión{% endblock %}
+{% block content %}
+<h2>Resultado de inversión para {{ inversion.nombre_inversionista }}</h2>
+<p><strong>Monto inicial:</strong> ${{ inversion.monto }}</p>
+<p><strong>Capital final:</strong> ${{ inversion.capital_final }}</p>
+<p><strong>TEA:</strong> {{ inversion.tasa_efectiva_anual }}%</p>
+
+<h3>Gráfico de crecimiento</h3>
+<img src="{{ grafica_url }}" alt="Gráfico">
+
+<p><a href="{% url 'exportar_pdf_inversion' inversion.id %}">📄 Exportar a PDF</a></p>
+{% endblock %}

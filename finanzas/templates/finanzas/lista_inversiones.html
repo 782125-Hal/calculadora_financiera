@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Inversiones{% endblock %}
+{% block content %}
+<h2>Simulaciones registradas</h2>
+<table border="1">
+    <tr>
+        <th>Inversionista</th>
+        <th>Monto Inicial</th>
+        <th>Tasa Anual (%)</th>
+        <th>Frecuencia</th>
+        <th>Periodo</th>
+        <th>Capital Final</th>
+        <th>TEA (%)</th>
+    </tr>
+    {% for inv in inversiones %}
+    <tr>
+        <td>{{ inv.nombre_inversionista }}</td>
+        <td>${{ inv.monto }}</td>
+        <td>{{ inv.tasa_anual }}</td>
+        <td>{{ inv.frecuencia }}</td>
+        <td>{{ inv.periodo }}</td>
+        <td>${{ inv.capital_final }}</td>
+        <td>{{ inv.tasa_efectiva_anual }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
