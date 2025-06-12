@@ -2,44 +2,38 @@
 
 {% block content %}
 <div class="form-container">
-    <h1>Nuevo Préstamo</h1>
-    
+    <h1>🧮 Calculadora de Préstamos</h1>
+
     <form method="post" class="prestamo-form">
         {% csrf_token %}
-        
+
         <div class="form-group">
-            <label for="{{ form.nombre_cliente.id_for_label }}">Nombre del Cliente</label>
-            {{ form.nombre_cliente }}
-            {% if form.nombre_cliente.errors %}
-                <div class="error-message">
-                    {% for error in form.nombre_cliente.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+            <label for="monto">Monto del préstamo:</label>
+            <input type="number" name="monto" step="0.01" min="100" max="1000000" required class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="{{ form.fecha_inicio.id_for_label }}">Fecha de Inicio</label>
-            {{ form.fecha_inicio }}
-            {% if form.fecha_inicio.errors %}
-                <div class="error-message">
-                    {% for error in form.fecha_inicio.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+            <label for="plazo">Plazo (en meses):</label>
+            <input type="number" name="plazo" min="1" max="360" required class="form-control">
         </div>
 
-        <!-- Campos ocultos precargados desde la sesión -->
-        {{ form.monto }}
-        {{ form.plazo }}
-        {{ form.tasa_anual }}
-        {{ form.frecuencia_pago }}
+        <div class="form-group">
+            <label for="tasa_anual">Tasa de interés anual (%):</label>
+            <input type="number" name="tasa_anual" step="0.01" min="0.01" max="100" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="frecuencia_pago">Frecuencia de pago:</label>
+            <select name="frecuencia_pago" required class="form-control">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="mensual">Mensual</option>
+                <option value="semanal">Semanal</option>
+            </select>
+        </div>
 
         <div class="button-group">
-            <button type="submit" class="btn btn-primary">Registrar Préstamo</button>
-            <a href="{% url 'finanzas:lista_prestamos' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Calcular y continuar</button>
+            <a href="{% url 'finanzas:inicio' %}" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>
@@ -86,17 +80,6 @@
         outline: none;
         border-color: #007bff;
         box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-    }
-
-    .error-message {
-        color: #dc3545;
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-    }
-
-    .help-text {
-        color: #6c757d;
-        font-size: 0.875rem;
     }
 
     .button-group {
