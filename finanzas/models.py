@@ -19,8 +19,15 @@ class Prestamo(models.Model):
     ultima_actualizacion = models.DateField(default=timezone.now)
 
     def calcular_cuota(self):
-        tasa_periodica = self.tasa_anual / (100 * (12 if self.frecuencia_pago == 'mensual' else 52))
-        num_pagos = self.plazo * (12 if self.frecuencia_pago == 'mensual' else 52)
+        """Calcula la cuota periódica del préstamo respetando que el plazo se
+        almacena en meses."""
+
+        if self.frecuencia_pago == 'mensual':
+            num_pagos = self.plazo
+            tasa_periodica = self.tasa_anual / 100 / 12
+        else:
+            num_pagos = ceil(self.plazo * 52 / 12)
+            tasa_periodica = self.tasa_anual / 100 / 52
 
         if tasa_periodica == 0:
             return self.monto / num_pagos
